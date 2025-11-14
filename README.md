@@ -4,11 +4,11 @@ A modern, minimal quiz application built with React Native and Expo.
 
 ### Quiz Screen
 
-<img src="screenshots/screen 1.png" width="300" alt="Quiz Screen" />
+![Quiz Screen](screenshots/screen1.png)
 
 ### Results Screen
 
-<img src="screenshots/screen 2.png" width="300" alt="Results Screen" />
+![Results Screen](screenshots/screen2.png)
 
 ## Tech Stack
 
