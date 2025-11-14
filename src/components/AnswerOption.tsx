@@ -1,72 +1,100 @@
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
+
+type AnswerStatus = "idle" | "selected" | "correct" | "wrong";
 
 interface AnswerOptionProps {
   answer: string;
   onPress: () => void;
-  isSelected: boolean;
-  isCorrect: boolean | null;
+  status: AnswerStatus;
   disabled: boolean;
 }
 
 export default function AnswerOption({
   answer,
   onPress,
-  isSelected,
-  isCorrect,
+  status,
   disabled,
 }: AnswerOptionProps) {
-  const getBackgroundColor = () => {
-    if (isCorrect === null) {
-      return isSelected ? "#007AFF" : "#f0f0f0";
-    }
-    if (isCorrect) {
-      return "#4CAF50";
-    }
-    if (isSelected && !isCorrect) {
-      return "#F44336";
-    }
-    return "#f0f0f0";
-  };
+  const palette = {
+    baseBorder: "#ece7dc",
+    baseDot: "#f1ede4",
+    baseText: "#1f1c19",
+    selectedBorder: "#f6b28a",
+    selectedBackground: "#fef4ed",
+    correctBorder: "#f0672d",
+    correctBackground: "#fde4d4",
+    wrongBorder: "#dc2626",
+    wrongBackground: "#fde4e4",
+  } as const;
 
-  const getTextColor = () => {
-    if (isCorrect !== null && (isCorrect || isSelected)) {
-      return "#fff";
-    }
-    return isSelected ? "#fff" : "#333";
-  };
+  let backgroundColor: string = "#ffffff";
+  let borderColor: string = palette.baseBorder;
+  let textColor: string = palette.baseText;
+  let dotColor: string = palette.baseDot;
+
+  if (status === "selected") {
+    backgroundColor = palette.selectedBackground;
+    borderColor = palette.selectedBorder;
+    dotColor = palette.selectedBorder;
+  }
+
+  if (status === "correct") {
+    backgroundColor = palette.correctBackground;
+    borderColor = palette.correctBorder;
+    dotColor = palette.correctBorder;
+    textColor = "#7a2d10";
+  }
+
+  if (status === "wrong") {
+    backgroundColor = palette.wrongBackground;
+    borderColor = palette.wrongBorder;
+    dotColor = palette.wrongBorder;
+    textColor = "#8b1c1c";
+  }
+
+  const isInteractive = status === "idle" || status === "selected";
 
   return (
     <TouchableOpacity
-      style={[styles.option, { backgroundColor: getBackgroundColor() }]}
+      style={[
+        styles.option,
+        {
+          backgroundColor,
+          borderColor,
+          opacity: disabled && isInteractive ? 0.6 : 1,
+        },
+      ]}
       onPress={onPress}
       disabled={disabled}
-      activeOpacity={0.7}
+      activeOpacity={0.8}
     >
-      <Text style={[styles.optionText, { color: getTextColor() }]}>
-        {answer}
-      </Text>
+      <View style={[styles.dot, { backgroundColor: dotColor }]} />
+      <Text style={[styles.optionText, { color: textColor }]}>{answer}</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   option: {
-    padding: 16,
-    borderRadius: 8,
-    marginVertical: 8,
+    paddingVertical: 18,
+    paddingHorizontal: 20,
+    borderRadius: 28,
+    marginBottom: 14,
     width: "100%",
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
+    borderWidth: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+  },
+  dot: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
   },
   optionText: {
     fontSize: 16,
-    fontWeight: "500",
-    textAlign: "center",
+    fontWeight: "400",
+    color: "#1f1c19",
+    fontFamily: "Nunito_400Regular",
   },
 });

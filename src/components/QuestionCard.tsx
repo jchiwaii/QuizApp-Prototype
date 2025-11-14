@@ -6,16 +6,9 @@ interface QuestionCardProps {
   totalQuestions: number;
 }
 
-export default function QuestionCard({
-  question,
-  currentQuestion,
-  totalQuestions,
-}: QuestionCardProps) {
+export default function QuestionCard({ question }: QuestionCardProps) {
   return (
     <View style={styles.card}>
-      <Text style={styles.questionNumber}>
-        Question {currentQuestion} of {totalQuestions}
-      </Text>
       <Text style={styles.question}>{question}</Text>
     </View>
   );
@@ -23,30 +16,23 @@ export default function QuestionCard({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#f9f9f9",
-    borderRadius: 12,
-    padding: 20,
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    marginBottom: 20,
+    backgroundColor: "#ffffff",
+    borderRadius: 24,
+    padding: 28,
+    marginBottom: 24,
     width: "100%",
-  },
-  questionNumber: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 12,
-    fontWeight: "600",
+    borderWidth: 1,
+    borderColor: "#e8dfcf",
+    shadowColor: "#f3ede2",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.35,
+    shadowRadius: 18,
   },
   question: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#333",
-    lineHeight: 28,
+    fontSize: 26,
+    fontWeight: "600",
+    color: "#1a1916",
+    lineHeight: 32,
+    fontFamily: "Fredoka_600Bold",
   },
 });
